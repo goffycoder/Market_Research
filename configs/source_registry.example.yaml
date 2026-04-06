@@ -1,0 +1,187 @@
+sources:
+  - id: fred
+    kind: api
+    priority: tier1
+    owner: Federal Reserve Bank of St. Louis
+    coverage:
+      - US macro
+      - US rates
+      - global macro mirrors
+    access:
+      auth: api_key
+      docs: https://fred.stlouisfed.org/docs/api/fred/overview.html
+      notes: Use ALFRED-compatible workflows for revision-aware studies.
+
+  - id: us_treasury_fiscal_data
+    kind: api
+    priority: tier1
+    owner: U.S. Treasury
+    coverage:
+      - debt
+      - borrowing
+      - yields
+      - cash balances
+    access:
+      auth: none
+      docs: https://fiscaldata.treasury.gov/api-documentation/
+      notes: Useful for debt, issuance, and fiscal liquidity conditions.
+
+  - id: imf_api
+    kind: api
+    priority: tier1
+    owner: IMF
+    coverage:
+      - cross-country macro
+      - balance of payments
+      - reserves
+      - external sector
+    access:
+      auth: account_may_be_required_for_exploration
+      docs: https://data.imf.org/en/Resource-Pages/IMF-API
+      notes: Use SDMX patterns and standardize country codes early.
+
+  - id: world_bank_api
+    kind: api
+    priority: tier1
+    owner: World Bank
+    coverage:
+      - development
+      - demographics
+      - long-cycle structural indicators
+    access:
+      auth: none
+      docs: https://datahelpdesk.worldbank.org/knowledgebase/articles/898581-api-basic-call-structures
+      notes: Lower frequency but valuable for structural context.
+
+  - id: ecb_data_portal
+    kind: api
+    priority: tier1
+    owner: European Central Bank
+    coverage:
+      - euro area macro
+      - rates
+      - balance sheet
+      - exchange rates
+    access:
+      auth: none
+      docs: https://data.ecb.europa.eu/help/api
+      notes: Also add RSS feeds for speeches and press releases.
+
+  - id: ecb_rss
+    kind: rss
+    priority: tier2
+    owner: European Central Bank
+    coverage:
+      - speeches
+      - press releases
+      - transcripts
+      - publications
+    access:
+      auth: none
+      docs: https://www.ecb.europa.eu/rss
+      notes: Good low-latency policy narrative source.
+
+  - id: cftc
+    kind: api_or_bulk_download
+    priority: tier1
+    owner: CFTC
+    coverage:
+      - futures positioning
+      - swaps
+      - bank participation
+    access:
+      auth: none
+      docs: https://www.cftc.gov/MarketReports/index.htm
+      notes: Important for positioning and leverage proxies.
+
+  - id: sec_edgar
+    kind: api
+    priority: tier1
+    owner: SEC
+    coverage:
+      - filings
+      - earnings
+      - balance sheets
+      - guidance
+    access:
+      auth: none
+      docs: https://www.sec.gov/edgar/sec-api-documentation
+      notes: Useful for corporate health and earnings-event pipelines.
+
+  - id: eia
+    kind: api
+    priority: tier1
+    owner: U.S. EIA
+    coverage:
+      - oil
+      - gas
+      - electricity
+      - inventories
+    access:
+      auth: api_key
+      docs: https://www.eia.gov/opendata/index.php/api
+      notes: Core energy shock feed.
+
+  - id: bls
+    kind: api
+    priority: tier1
+    owner: U.S. BLS
+    coverage:
+      - labor
+      - CPI
+      - wages
+      - employment
+    access:
+      auth: optional_registration
+      docs: https://www.bls.gov/bls/api_features.htm
+      notes: Store both release time and observation period.
+
+  - id: x_api
+    kind: api
+    priority: tier4
+    owner: X
+    coverage:
+      - narrative
+      - official account monitoring
+      - event velocity
+    access:
+      auth: paid_tier_or_higher_for_useful_read_access
+      docs: https://developer.x.com/en/docs/twitter-api
+      notes: Use as a secondary signal, not as the truth layer.
+
+  - id: x_search
+    kind: api
+    priority: tier4
+    owner: X
+    coverage:
+      - recent search
+      - full archive where available
+    access:
+      auth: tier_dependent
+      docs: https://developer.x.com/en/docs/x-api/search-overview
+      notes: Best for topic pull, watchlists, and event backfills.
+
+  - id: x_filtered_stream
+    kind: api
+    priority: tier4
+    owner: X
+    coverage:
+      - real-time watchlists
+      - live event capture
+    access:
+      auth: pro_or_enterprise_for_useful_stream_access
+      docs: https://developer.x.com/en/docs/twitter-api/filtered-stream-overview
+      notes: Best for official handles and keyword rules.
+
+  - id: gdelt
+    kind: api
+    priority: tier4
+    owner: GDELT Project
+    coverage:
+      - global news
+      - topic clustering
+      - attention spikes
+    access:
+      auth: none
+      docs: https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/amp/
+      notes: Useful for low-friction global event monitoring.

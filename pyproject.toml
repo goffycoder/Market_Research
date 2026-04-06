@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "global-flow-engine"
+version = "0.1.0"
+description = "A global macro and market intelligence engine for modeling liquidity, flows, and regime shifts."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Vraj Patel" }
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = []
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

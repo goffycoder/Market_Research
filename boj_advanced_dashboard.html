@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BOJ Advanced Dashboard | Mar 30 to Apr 3, 2026</title>
+  <style>
+    :root {
+      --bg: #f4ede3;
+      --paper: #fffaf1;
+      --ink: #17222f;
+      --muted: #5b6a72;
+      --grid: rgba(23, 34, 47, 0.12);
+      --line: rgba(23, 34, 47, 0.22);
+      --teal: #0f766e;
+      --teal-soft: #caefe8;
+      --terracotta: #c8563c;
+      --terracotta-soft: #f7d5cb;
+      --gold: #c58a27;
+      --gold-soft: #f6e4bf;
+      --navy: #1f3656;
+      --navy-soft: #d9e4f5;
+      --olive: #5a6b2d;
+      --olive-soft: #dee6c8;
+      --rose: #a14463;
+      --rose-soft: #f1d4de;
+      --shadow: 0 18px 48px rgba(23, 34, 47, 0.08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(197, 138, 39, 0.14), transparent 30%),
+        radial-gradient(circle at left center, rgba(15, 118, 110, 0.12), transparent 28%),
+        linear-gradient(180deg, #f7f1e8 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      line-height: 1.45;
+    }
+
+    .page {
+      width: min(1320px, calc(100% - 32px));
+      margin: 28px auto 40px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card,
+    .hero-card {
+      background: rgba(255, 250, 241, 0.92);
+      border: 1px solid rgba(23, 34, 47, 0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card {
+      padding: 26px 26px 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(31, 54, 86, 0.08);
+      color: var(--navy);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1,
+    h2,
+    h3,
+    .metric-value {
+      font-family: "Avenir Next Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4.2vw, 3.8rem);
+      line-height: 0.98;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 64ch;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .hero-notes {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .signal-box {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .signal-kicker {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .signal-heading {
+      margin: 0;
+      font-size: 1.9rem;
+      line-height: 1;
+    }
+
+    .signal-copy {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .toggle-wrap {
+      display: inline-flex;
+      background: rgba(23, 34, 47, 0.06);
+      padding: 4px;
+      border-radius: 999px;
+      gap: 4px;
+      width: fit-content;
+    }
+
+    .toggle-wrap button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.92rem;
+    }
+
+    .toggle-wrap button.active {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 0.92rem;
+      color: var(--ink);
+      background: rgba(15, 118, 110, 0.08);
+      border: 1px solid rgba(15, 118, 110, 0.14);
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric-card {
+      padding: 18px 18px 16px;
+      min-height: 156px;
+      display: grid;
+      align-content: space-between;
+      gap: 10px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.12)),
+        var(--paper);
+      border: 1px solid rgba(23, 34, 47, 0.08);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .metric-title {
+      color: var(--muted);
+      font-size: 0.9rem;
+      max-width: 18ch;
+    }
+
+    .metric-value {
+      font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+      line-height: 0.95;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .span-12 { grid-column: span 12; }
+    .span-8 { grid-column: span 8; }
+    .span-7 { grid-column: span 7; }
+    .span-6 { grid-column: span 6; }
+    .span-5 { grid-column: span 5; }
+    .span-4 { grid-column: span 4; }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      line-height: 1.02;
+    }
+
+    .panel-note {
+      margin: 0;
+      color: var(--muted);
+      max-width: 54ch;
+      font-size: 0.94rem;
+    }
+
+    .micro {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .subgrid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mini-panel {
+      background: rgba(23, 34, 47, 0.025);
+      border: 1px solid rgba(23, 34, 47, 0.08);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .mini-panel h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      flex: 0 0 auto;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      position: relative;
+      padding-left: 18px;
+      margin-top: 8px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(31, 54, 86, 0.3), rgba(31, 54, 86, 0.08));
+    }
+
+    .event {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .event::before {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 3px solid var(--navy);
+      box-shadow: 0 0 0 6px rgba(31, 54, 86, 0.08);
+    }
+
+    .event-date {
+      display: inline-block;
+      margin-bottom: 4px;
+      font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .event strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .event p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .insight {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(23, 34, 47, 0.08);
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .insight h3 {
+      margin: 0 0 8px;
+      font-size: 1.02rem;
+    }
+
+    .insight p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 16px 4px 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .metric-grid,
+      .subgrid,
+      .insight-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .span-8,
+      .span-7,
+      .span-6,
+      .span-5,
+      .span-4 {
+        grid-column: span 12;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100% - 18px, 1320px);
+        margin: 12px auto 28px;
+      }
+
+      .hero-card,
+      .card {
+        padding: 18px;
+      }
+
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-head {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">BOJ Dashboard | Local files through April 3, 2026</div>
+        <h1>Balance Sheet Normalization, Not A Pivot</h1>
+        <p class="subtitle">
+          A visual read of the Bank of Japan's March 30 to April 3 data: liquidity is still huge but shrinking,
+          JGB buying continues at a controlled pace, and the policy message stays cautiously hawkish.
+        </p>
+        <div class="hero-notes">
+          <div>Scope: local BOJ spreadsheets, PDFs, and reference pages already present in this workspace.</div>
+          <div>USD conversions are approximate and use <strong>USD/JPY 159.67</strong> from April 3, 2026 historical pricing.</div>
+          <div>Interpretive panels are inferences from the BOJ's own files, not separate market commentary.</div>
+        </div>
+      </div>
+
+      <div class="hero-card signal-box">
+        <p class="signal-kicker">Policy read</p>
+        <h2 class="signal-heading">Cautious hawkish normalization</h2>
+        <p class="signal-copy">
+          The BOJ is telling markets to watch wages and underlying inflation, not every noisy CPI print. It still
+          expects to tighten further if the outlook holds, but it is not willing to force the pace into an energy-shock environment.
+        </p>
+        <div class="toggle-wrap" aria-label="Unit selector">
+          <button id="mode-jpy" class="active" type="button">JPY tn</button>
+          <button id="mode-usd" type="button">USD bn</button>
+        </div>
+        <div class="pill-row">
+          <div class="pill">Rate held at 0.75%</div>
+          <div class="pill">JGB buying still running</div>
+          <div class="pill">Excess liquidity trending lower</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="metric-grid" id="metrics"></section>
+
+    <section class="dashboard">
+      <article class="card span-5">
+        <div class="panel-head">
+          <div>
+            <h2>System Liquidity</h2>
+            <p class="panel-note">Stocks remain enormous, but the year-over-year drain is now too large to ignore. This is what gradual balance-sheet normalization looks like.</p>
+          </div>
+          <div class="micro">Month-end stocks, March 2026</div>
+        </div>
+        <svg id="liquidity-chart" viewBox="0 0 580 340" role="img" aria-label="March liquidity stock chart"></svg>
+      </article>
+
+      <article class="card span-7">
+        <div class="panel-head">
+          <div>
+            <h2>Funding Pulse</h2>
+            <p class="panel-note">March ended with a small drain in current-account balances. April is projected to flip positive mainly because treasury flows turn supportive.</p>
+          </div>
+          <div class="micro">Positive bars add liquidity, negative bars drain it</div>
+        </div>
+        <div class="subgrid">
+          <div class="mini-panel">
+            <h3>March actual funding map</h3>
+            <svg id="march-flow-chart" viewBox="0 0 620 320" role="img" aria-label="March funding map"></svg>
+          </div>
+          <div class="mini-panel">
+            <h3>April treasury breakdown</h3>
+            <svg id="april-flow-chart" viewBox="0 0 620 320" role="img" aria-label="April treasury flow breakdown"></svg>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-7">
+        <div class="panel-head">
+          <div>
+            <h2>JGB Balance Sheet</h2>
+            <p class="panel-note">Gross purchases continue, but holdings still fell sharply late in March. Runoff is now overtaking buying in key maturity buckets.</p>
+          </div>
+          <div class="micro">BOJ holdings snapshots and maturity moves</div>
+        </div>
+        <div class="subgrid">
+          <div class="mini-panel">
+            <h3>Total JGB holdings</h3>
+            <svg id="jgb-total-chart" viewBox="0 0 620 320" role="img" aria-label="Total JGB holdings chart"></svg>
+          </div>
+          <div class="mini-panel">
+            <h3>Maturity impact, Mar 19 to Mar 31</h3>
+            <svg id="jgb-shift-chart" viewBox="0 0 620 320" role="img" aria-label="JGB maturity impact chart"></svg>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-5">
+        <div class="panel-head">
+          <div>
+            <h2>Collateral Safety Net</h2>
+            <p class="panel-note">The BOJ is normalizing policy with a very large operational backstop still in place, which lowers the odds of a disorderly funding shock.</p>
+          </div>
+          <div class="micro">Face amount composition, March 31, 2026</div>
+        </div>
+        <svg id="collateral-chart" viewBox="0 0 580 340" role="img" aria-label="Collateral composition chart"></svg>
+      </article>
+
+      <article class="card span-4">
+        <div class="panel-head">
+          <div>
+            <h2>Policy Signal Matrix</h2>
+            <p class="panel-note">This panel interprets the BOJ documents: inflation persistence is high enough to preserve a tightening bias, but growth risks are also high enough to slow the pace.</p>
+          </div>
+          <div class="micro">Inference from BOJ documents</div>
+        </div>
+        <svg id="signal-chart" viewBox="0 0 520 360" role="img" aria-label="Policy signal matrix"></svg>
+      </article>
+
+      <article class="card span-4">
+        <div class="panel-head">
+          <div>
+            <h2>Decision Timeline</h2>
+            <p class="panel-note">The files work best as a sequence. Each release nudges the same core message into clearer focus.</p>
+          </div>
+          <div class="micro">March 19 to April 3</div>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </article>
+
+      <article class="card span-4">
+        <div class="panel-head">
+          <div>
+            <h2>Advanced Read</h2>
+            <p class="panel-note">Three takeaways that matter more than the noisy month-to-month mechanics.</p>
+          </div>
+        </div>
+        <div class="insight-grid">
+          <div class="insight">
+            <h3>1. The stock matters</h3>
+            <p>March current-account balances were still about 460 trillion yen, but they were roughly 71 trillion yen below a year earlier. The BOJ is shrinking the old QE footprint without draining liquidity so fast that markets buckle.</p>
+          </div>
+          <div class="insight">
+            <h3>2. Fiscal timing is noisy</h3>
+            <p>The April projected surplus looks large, but the source file itself says the biggest swings are mainly about treasury factors. That is not a clean signal of a policy turn.</p>
+          </div>
+          <div class="insight">
+            <h3>3. Communication is shifting</h3>
+            <p>The BOJ is broadening its dashboard toward underlying inflation and labor tightness. That is a direct sign it does not want markets to trade every headline CPI move as if it were the policy anchor.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="footer">
+      Built from local files in this workspace, including the March 19 monetary policy statement, March 30 summary of opinions, March 31 JGB purchase schedule, April 3 current-account projections, and the related BOJ Excel releases.
+    </div>
+  </main>
+
+  <script>
+    const FX = 159.67;
+    const state = { mode: "jpy" };
+    const colors = {
+      ink: "#17222f",
+      muted: "#5b6a72",
+      grid: "rgba(23, 34, 47, 0.12)",
+      line: "rgba(23, 34, 47, 0.22)",
+      teal: "#0f766e",
+      terracotta: "#c8563c",
+      navy: "#1f3656",
+      paper: "#fffaf1"
+    };
+
+    const metrics = [
+      {
+        title: "Current account balances",
+        value: 459.7433,
+        note: "March 2026 month-end stock"
+      },
+      {
+        title: "Reserve balances",
+        value: 421.0409,
+        note: "March 2026 month-end stock"
+      },
+      {
+        title: "YoY current-account drain",
+        value: -70.6893,
+        note: "FY2025 versus prior year"
+      },
+      {
+        title: "April projected funds surplus",
+        value: 6.34,
+        note: "Mainly treasury-driven"
+      },
+      {
+        title: "Monthly JGB purchase pace",
+        value: 2.705,
+        note: "April-June 2026 schedule"
+      },
+      {
+        title: "Late-March JGB holdings decline",
+        value: -15.1743,
+        note: "March 19 to March 31"
+      }
+    ];
+
+    const data = {
+      liquidity: [
+        { label: "Current account", value: 459.7433, yoy: -70.6893, color: "#1f3656", soft: "#d9e4f5" },
+        { label: "Reserve balances", value: 421.0409, yoy: -56.9222, color: "#0f766e", soft: "#caefe8" }
+      ],
+      marchFlow: [
+        { label: "Banknotes", value: 0.6186 },
+        { label: "Treasury factors", value: 1.3237 },
+        { label: "Funds surplus", value: 1.9423 },
+        { label: "BOJ ops ex-LSP", value: 2.4858 },
+        { label: "Loan support runoff", value: -5.7855 },
+        { label: "Net CAB change", value: -1.3574 }
+      ],
+      aprilFlow: [
+        { label: "Net JGB issuance", value: -9.74 },
+        { label: "T-Bill flow", value: 0.79 },
+        { label: "Other treasury flows", value: 15.39 },
+        { label: "Net treasury factor", value: 6.44 }
+      ],
+      jgbTotals: [
+        { label: "Mar 10", value: 541.3025 },
+        { label: "Mar 19", value: 542.8548 },
+        { label: "Mar 31", value: 527.6805 }
+      ],
+      jgbShift: [
+        { label: "10Y JGB", value: -7.6972 },
+        { label: "5Y JGB", value: -5.9378 },
+        { label: "20Y JGB", value: -1.6589 },
+        { label: "Other segments", value: 0.1196 }
+      ],
+      collateral: [
+        { label: "Housing loan trust", value: 48.02, color: "#1f3656" },
+        { label: "Loans to government", value: 28.154, color: "#0f766e" },
+        { label: "Government securities", value: 26.2228, color: "#c58a27" },
+        { label: "Municipal bonds", value: 19.4475, color: "#5a6b2d" },
+        { label: "Public agency / FILP", value: 7.3765, color: "#a14463" },
+        { label: "Corporate credit", value: 12.2738, color: "#c8563c" },
+        { label: "Other", value: 8.4444, color: "#6b7280" }
+      ],
+      signalPoint: { x: 70, y: 77 },
+      timeline: [
+        {
+          date: "Mar 19",
+          title: "Policy rate held at 0.75%",
+          copy: "The statement keeps a tightening bias alive: if the outlook is realized, the BOJ says it will keep adjusting monetary accommodation."
+        },
+        {
+          date: "Mar 26",
+          title: "Underlying-inflation dashboard expands",
+          copy: "New CPI estimates strip out institutional effects such as energy relief measures, signaling that the BOJ wants a cleaner read on true inflation."
+        },
+        {
+          date: "Mar 26",
+          title: "Labor tightness gets more weight",
+          copy: "The output-gap update adds labor-market indicators, reinforcing the message that wages and labor scarcity matter more than a single CPI headline."
+        },
+        {
+          date: "Mar 30",
+          title: "Summary of opinions stays hawkish but cautious",
+          copy: "Board members worry about oil and Middle East risks, but many still lean toward further hikes if the wage-price cycle stays intact."
+        },
+        {
+          date: "Mar 31",
+          title: "JGB buying continues near 2.7 trillion yen per month",
+          copy: "The BOJ stays in the bond market, but on a smaller, controlled schedule consistent with market smoothing rather than renewed QE."
+        },
+        {
+          date: "Apr 3",
+          title: "Treasury factors drive an April liquidity add",
+          copy: "The projected monthly surplus rises sharply, but the source file points clearly to fiscal mechanics, not a change in policy doctrine."
+        }
+      ]
+    };
+
+    const svgNs = "http://www.w3.org/2000/svg";
+
+    function money(value, digits = 1) {
+      if (state.mode === "jpy") {
+        return `${value.toFixed(digits)} tn JPY`;
+      }
+      return `${(value * 1000 / FX).toFixed(digits)} bn USD`;
+    }
+
+    function plainMoney(value, digits = 1) {
+      if (state.mode === "jpy") {
+        return `${Math.abs(value).toFixed(digits)} tn JPY`;
+      }
+      return `${Math.abs(value * 1000 / FX).toFixed(digits)} bn USD`;
+    }
+
+    function fmt(value, digits = 1) {
+      return value.toFixed(digits).replace(/\.0$/, "");
+    }
+
+    function el(tag, attrs = {}, text = "") {
+      const node = document.createElementNS(svgNs, tag);
+      Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+      if (text) node.textContent = text;
+      return node;
+    }
+
+    function clear(node) {
+      while (node.firstChild) node.removeChild(node.firstChild);
+    }
+
+    function addText(svg, x, y, text, attrs = {}) {
+      svg.appendChild(el("text", { x, y, ...attrs }, text));
+    }
+
+    function renderMetrics() {
+      const wrap = document.getElementById("metrics");
+      wrap.innerHTML = "";
+      metrics.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = "metric-card";
+        card.innerHTML = `
+          <div class="metric-title">${item.title}</div>
+          <div class="metric-value">${money(item.value)}</div>
+          <div class="metric-note">${item.note}</div>
+        `;
+        wrap.appendChild(card);
+      });
+    }
+
+    function drawLiquidity() {
+      const svg = document.getElementById("liquidity-chart");
+      clear(svg);
+      const width = 580;
+      const height = 340;
+      const margin = { top: 24, right: 26, bottom: 62, left: 60 };
+      const chartH = height - margin.top - margin.bottom;
+      const baseY = height - margin.bottom;
+      const maxValue = 500;
+      const scaleY = (value) => baseY - (value / maxValue) * chartH;
+
+      [0, 100, 200, 300, 400, 500].forEach((tick) => {
+        const y = scaleY(tick);
+        svg.appendChild(el("line", {
+          x1: margin.left,
+          y1: y,
+          x2: width - margin.right,
+          y2: y,
+          stroke: colors.grid,
+          "stroke-width": 1
+        }));
+        addText(svg, margin.left - 10, y + 4, String(tick), {
+          "text-anchor": "end",
+          fill: colors.muted,
+          "font-size": "12"
+        });
+      });
+
+      const positions = [180, 390];
+      data.liquidity.forEach((item, index) => {
+        const barWidth = 110;
+        const x = positions[index];
+        const y = scaleY(item.value);
+        const barHeight = baseY - y;
+        svg.appendChild(el("rect", {
+          x,
+          y,
+          width: barWidth,
+          height: barHeight,
+          rx: 24,
+          fill: item.color
+        }));
+        svg.appendChild(el("rect", {
+          x: x + 12,
+          y: y + 14,
+          width: barWidth - 24,
+          height: 40,
+          rx: 12,
+          fill: "rgba(255,255,255,0.14)"
+        }));
+        addText(svg, x + barWidth / 2, y - 12, plainMoney(item.value), {
+          "text-anchor": "middle",
+          fill: item.color,
+          "font-size": "14",
+          "font-weight": "700"
+        });
+        addText(svg, x + barWidth / 2, baseY + 22, item.label, {
+          "text-anchor": "middle",
+          fill: colors.ink,
+          "font-size": "14",
+          "font-weight": "600"
+        });
+        addText(svg, x + barWidth / 2, baseY + 42, `YoY ${money(item.yoy)}`, {
+          "text-anchor": "middle",
+          fill: colors.muted,
+          "font-size": "12"
+        });
+      });
+
+      addText(svg, width / 2, 18, "Stock is still huge; the direction is still lower.", {
+        "text-anchor": "middle",
+        fill: colors.muted,
+        "font-size": "13"
+      });
+    }
+
+    function drawHorizontalBars(svgId, items, titleColor) {
+      const svg = document.getElementById(svgId);
+      clear(svg);
+      const width = 620;
+      const height = 320;
+      const margin = { top: 24, right: 26, bottom: 22, left: 170 };
+      const chartW = width - margin.left - margin.right;
+      const rowH = 44;
+      const zeroX = margin.left + chartW / 2;
+      const maxAbs = Math.max(...items.map((item) => Math.abs(item.value))) * 1.15;
+
+      svg.appendChild(el("line", {
+        x1: zeroX,
+        y1: margin.top - 8,
+        x2: zeroX,
+        y2: height - margin.bottom + 6,
+        stroke: colors.line,
+        "stroke-width": 2,
+        "stroke-dasharray": "4 4"
+      }));
+
+      addText(svg, zeroX - 8, 16, "Drain", {
+        "text-anchor": "end",
+        fill: colors.terracotta,
+        "font-size": "12",
+        "font-weight": "700"
+      });
+      addText(svg, zeroX + 8, 16, "Add", {
+        fill: titleColor,
+        "font-size": "12",
+        "font-weight": "700"
+      });
+
+      items.forEach((item, index) => {
+        const y = margin.top + index * rowH + 18;
+        const widthPx = (Math.abs(item.value) / maxAbs) * (chartW / 2 - 24);
+        const x = item.value >= 0 ? zeroX : zeroX - widthPx;
+        const fill = item.value >= 0 ? colors.teal : colors.terracotta;
+        const labelX = item.value >= 0 ? x + widthPx + 8 : x - 8;
+
+        addText(svg, margin.left - 14, y + 4, item.label, {
+          "text-anchor": "end",
+          fill: colors.ink,
+          "font-size": "13"
+        });
+
+        svg.appendChild(el("rect", {
+          x,
+          y: y - 11,
+          width: Math.max(2, widthPx),
+          height: 22,
+          rx: 10,
+          fill
+        }));
+
+        addText(svg, labelX, y + 4, money(item.value), {
+          "text-anchor": item.value >= 0 ? "start" : "end",
+          fill: fill,
+          "font-size": "12",
+          "font-weight": "700"
+        });
+      });
+    }
+
+    function drawMarchFlow() {
+      drawHorizontalBars("march-flow-chart", data.marchFlow, colors.teal);
+    }
+
+    function drawAprilFlow() {
+      drawHorizontalBars("april-flow-chart", data.aprilFlow, colors.teal);
+    }
+
+    function drawJgbTotals() {
+      const svg = document.getElementById("jgb-total-chart");
+      clear(svg);
+      const width = 620;
+      const height = 320;
+      const margin = { top: 26, right: 24, bottom: 54, left: 56 };
+      const chartW = width - margin.left - margin.right;
+      const chartH = height - margin.top - margin.bottom;
+      const minY = 524;
+      const maxY = 545;
+      const scaleY = (value) => margin.top + chartH - ((value - minY) / (maxY - minY)) * chartH;
+      const points = data.jgbTotals.map((item, index) => ({
+        x: margin.left + (index * chartW) / (data.jgbTotals.length - 1),
+        y: scaleY(item.value),
+        ...item
+      }));
+
+      [525, 530, 535, 540, 545].forEach((tick) => {
+        const y = scaleY(tick);
+        svg.appendChild(el("line", {
+          x1: margin.left,
+          y1: y,
+          x2: width - margin.right,
+          y2: y,
+          stroke: colors.grid,
+          "stroke-width": 1
+        }));
+        addText(svg, margin.left - 10, y + 4, String(tick), {
+          "text-anchor": "end",
+          fill: colors.muted,
+          "font-size": "12"
+        });
+      });
+
+      const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
+      svg.appendChild(el("path", {
+        d: path,
+        fill: "none",
+        stroke: colors.navy,
+        "stroke-width": 4,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      }));
+
+      points.forEach((point) => {
+        svg.appendChild(el("circle", {
+          cx: point.x,
+          cy: point.y,
+          r: 6,
+          fill: colors.paper,
+          stroke: colors.navy,
+          "stroke-width": 4
+        }));
+        addText(svg, point.x, point.y - 14, plainMoney(point.value), {
+          "text-anchor": "middle",
+          fill: colors.navy,
+          "font-size": "13",
+          "font-weight": "700"
+        });
+        addText(svg, point.x, height - 20, point.label, {
+          "text-anchor": "middle",
+          fill: colors.ink,
+          "font-size": "13"
+        });
+      });
+
+      addText(svg, width / 2, 16, `Mar 19 to Mar 31: ${money(-15.1743)}`, {
+        "text-anchor": "middle",
+        fill: colors.terracotta,
+        "font-size": "13",
+        "font-weight": "700"
+      });
+    }
+
+    function drawJgbShift() {
+      drawHorizontalBars("jgb-shift-chart", data.jgbShift, colors.teal);
+    }
+
+    function drawCollateral() {
+      const svg = document.getElementById("collateral-chart");
+      clear(svg);
+      const width = 580;
+      const total = data.collateral.reduce((sum, item) => sum + item.value, 0);
+      const barX = 32;
+      const barY = 92;
+      const barW = 516;
+      const barH = 44;
+
+      let cursor = barX;
+      data.collateral.forEach((item) => {
+        const segW = (item.value / total) * barW;
+        svg.appendChild(el("rect", {
+          x: cursor,
+          y: barY,
+          width: segW,
+          height: barH,
+          fill: item.color
+        }));
+        cursor += segW;
+      });
+
+      svg.appendChild(el("rect", {
+        x: barX,
+        y: barY,
+        width: barW,
+        height: barH,
+        rx: 18,
+        fill: "none",
+        stroke: colors.grid,
+        "stroke-width": 1.5
+      }));
+
+      addText(svg, 32, 42, `Face amount: ${money(149.9390)}`, {
+        fill: colors.ink,
+        "font-size": "15",
+        "font-weight": "700"
+      });
+      addText(svg, 32, 64, `Collateral value: ${money(121.3709)} | Haircut: 19.1%`, {
+        fill: colors.muted,
+        "font-size": "13"
+      });
+
+      let legendY = 178;
+      data.collateral.forEach((item, index) => {
+        const col = index % 2;
+        const row = Math.floor(index / 2);
+        const x = 32 + col * 264;
+        const y = legendY + row * 34;
+        svg.appendChild(el("rect", {
+          x,
+          y: y - 10,
+          width: 14,
+          height: 14,
+          rx: 4,
+          fill: item.color
+        }));
+        addText(svg, x + 22, y + 2, `${item.label}: ${plainMoney(item.value)}`, {
+          fill: colors.ink,
+          "font-size": "13"
+        });
+      });
+    }
+
+    function drawSignal() {
+      const svg = document.getElementById("signal-chart");
+      clear(svg);
+      const width = 520;
+      const height = 360;
+      const margin = 48;
+      const plotX = margin;
+      const plotY = 28;
+      const plotW = width - margin * 1.5;
+      const plotH = height - margin - 50;
+
+      const quads = [
+        { x: plotX, y: plotY, fill: "rgba(15, 118, 110, 0.08)" },
+        { x: plotX + plotW / 2, y: plotY, fill: "rgba(197, 138, 39, 0.10)" },
+        { x: plotX, y: plotY + plotH / 2, fill: "rgba(31, 54, 86, 0.06)" },
+        { x: plotX + plotW / 2, y: plotY + plotH / 2, fill: "rgba(200, 86, 60, 0.08)" }
+      ];
+
+      quads.forEach((quad) => {
+        svg.appendChild(el("rect", {
+          x: quad.x,
+          y: quad.y,
+          width: plotW / 2,
+          height: plotH / 2,
+          fill: quad.fill
+        }));
+      });
+
+      svg.appendChild(el("rect", {
+        x: plotX,
+        y: plotY,
+        width: plotW,
+        height: plotH,
+        fill: "none",
+        stroke: colors.line,
+        "stroke-width": 1.5,
+        rx: 16
+      }));
+
+      svg.appendChild(el("line", {
+        x1: plotX + plotW / 2,
+        y1: plotY,
+        x2: plotX + plotW / 2,
+        y2: plotY + plotH,
+        stroke: colors.line,
+        "stroke-width": 1.5,
+        "stroke-dasharray": "4 4"
+      }));
+
+      svg.appendChild(el("line", {
+        x1: plotX,
+        y1: plotY + plotH / 2,
+        x2: plotX + plotW,
+        y2: plotY + plotH / 2,
+        stroke: colors.line,
+        "stroke-width": 1.5,
+        "stroke-dasharray": "4 4"
+      }));
+
+      addText(svg, plotX + plotW / 2, height - 14, "Growth risk", {
+        "text-anchor": "middle",
+        fill: colors.muted,
+        "font-size": "13"
+      });
+      addText(svg, 18, plotY + plotH / 2, "Inflation persistence", {
+        transform: `rotate(-90 18 ${plotY + plotH / 2})`,
+        "text-anchor": "middle",
+        fill: colors.muted,
+        "font-size": "13"
+      });
+
+      addText(svg, plotX + 10, plotY + 20, "Wait / benign inflation", {
+        fill: colors.muted,
+        "font-size": "11"
+      });
+      addText(svg, plotX + plotW / 2 + 10, plotY + 20, "Fast tightening risk", {
+        fill: colors.muted,
+        "font-size": "11"
+      });
+      addText(svg, plotX + 10, plotY + plotH / 2 + 20, "Renewed easing zone", {
+        fill: colors.muted,
+        "font-size": "11"
+      });
+      addText(svg, plotX + plotW / 2 + 10, plotY + plotH / 2 + 20, "Current BOJ zone", {
+        fill: colors.muted,
+        "font-size": "11"
+      });
+
+      const pointX = plotX + (data.signalPoint.x / 100) * plotW;
+      const pointY = plotY + plotH - (data.signalPoint.y / 100) * plotH;
+
+      svg.appendChild(el("circle", {
+        cx: pointX,
+        cy: pointY,
+        r: 11,
+        fill: colors.terracotta,
+        opacity: "0.22"
+      }));
+      svg.appendChild(el("circle", {
+        cx: pointX,
+        cy: pointY,
+        r: 6.5,
+        fill: colors.terracotta
+      }));
+
+      addText(svg, pointX + 14, pointY - 12, "Cautious hawkish normalization", {
+        fill: colors.terracotta,
+        "font-size": "12",
+        "font-weight": "700"
+      });
+      addText(svg, pointX + 14, pointY + 6, "More hikes likely if outlook holds,", {
+        fill: colors.muted,
+        "font-size": "12"
+      });
+      addText(svg, pointX + 14, pointY + 22, "but oil and growth risk slow the pace.", {
+        fill: colors.muted,
+        "font-size": "12"
+      });
+    }
+
+    function renderTimeline() {
+      const wrap = document.getElementById("timeline");
+      wrap.innerHTML = "";
+      data.timeline.forEach((event) => {
+        const node = document.createElement("div");
+        node.className = "event";
+        node.innerHTML = `
+          <div class="event-date">${event.date}</div>
+          <strong>${event.title}</strong>
+          <p>${event.copy}</p>
+        `;
+        wrap.appendChild(node);
+      });
+    }
+
+    function renderAll() {
+      renderMetrics();
+      drawLiquidity();
+      drawMarchFlow();
+      drawAprilFlow();
+      drawJgbTotals();
+      drawJgbShift();
+      drawCollateral();
+      drawSignal();
+      renderTimeline();
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      document.getElementById("mode-jpy").classList.toggle("active", mode === "jpy");
+      document.getElementById("mode-usd").classList.toggle("active", mode === "usd");
+      renderAll();
+    }
+
+    document.getElementById("mode-jpy").addEventListener("click", () => setMode("jpy"));
+    document.getElementById("mode-usd").addEventListener("click", () => setMode("usd"));
+
+    renderAll();
+  </script>
+</body>
+</html>

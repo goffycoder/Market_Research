@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Data outputs
+data/raw/*
+data/normalized/*
+data/features/*
+data/models/*
+data/snapshots/*
+!data/raw/.gitkeep
+!data/normalized/.gitkeep
+!data/features/.gitkeep
+!data/models/.gitkeep
+!data/snapshots/.gitkeep
+
+# Local secrets
+.env
+.env.*
+secrets/

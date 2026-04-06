@@ -1,0 +1,33 @@
+section,series,date,value_tn_jpy,approx_usd_bn,notes
+liquidity,current_account_balances_month_end,2026-03-31,459.7433,2879.33,March 2026 month-end stock
+liquidity,reserve_balances_month_end,2026-03-31,421.0409,2636.94,March 2026 month-end stock
+liquidity,current_account_balances_yoy_change,2026-03-31,-70.6893,-442.72,FY2025 versus prior year
+liquidity,reserve_balances_yoy_change,2026-03-31,-56.9222,-356.50,FY2025 versus prior year
+flows,march_banknotes,2026-03,0.6186,3.87,Positive adds funds
+flows,march_treasury_factors,2026-03,1.3237,8.29,Positive adds funds
+flows,march_funds_surplus,2026-03,1.9423,12.16,Money-market surplus
+flows,march_boj_ops_ex_lsp,2026-03,2.4858,15.57,Operations excluding Loan Support Program
+flows,march_loan_support_program,2026-03,-5.7855,-36.23,Runoff drains balances
+flows,march_net_current_account_change,2026-03,-1.3574,-8.50,Monthly net change
+flows,april_projected_banknotes,2026-04,-0.1000,-0.63,Projected
+flows,april_projected_treasury_factors,2026-04,6.4400,40.33,Projected
+flows,april_projected_net_jgb_issuance,2026-04,-9.7400,-61.00,Within treasury factors
+flows,april_projected_tbill_flow,2026-04,0.7900,4.95,Within treasury factors
+flows,april_projected_other_treasury_flows,2026-04,15.3900,96.39,Within treasury factors
+flows,april_projected_funds_surplus,2026-04,6.3400,39.71,Projected money-market surplus
+jgb,total_holdings,2026-03-10,541.3025,3389.99,BOJ JGB holdings
+jgb,total_holdings,2026-03-19,542.8548,3399.71,BOJ JGB holdings
+jgb,total_holdings,2026-03-31,527.6805,3304.82,BOJ JGB holdings
+jgb,holdings_change_mar19_to_mar31,2026-03-31,-15.1743,-95.04,Late-March decline
+jgb,mar19_to_mar31_10y_change,2026-03-31,-7.6972,-48.21,Major maturity effect
+jgb,mar19_to_mar31_5y_change,2026-03-31,-5.9378,-37.19,Major maturity effect
+jgb,mar19_to_mar31_20y_change,2026-03-31,-1.6589,-10.39,Major maturity effect
+jgb,monthly_purchase_schedule_apr_to_jun,2026-03-31,2.7050,16.94,Quarterly JGB purchase schedule
+collateral,total_face_amount,2026-03-31,149.9390,939.06,Collateral accepted by BOJ
+collateral,total_collateral_value,2026-03-31,121.3709,760.14,After valuation haircuts
+collateral,housing_loan_trust_beneficial_interests,2026-03-31,48.0200,300.75,Largest collateral bucket
+collateral,loans_to_government,2026-03-31,28.1540,176.33,Government-related claims
+collateral,government_securities,2026-03-31,26.2228,164.23,Government securities
+collateral,municipal_bonds,2026-03-31,19.4475,121.79,Municipal bonds
+collateral,public_agency_filp_bonds,2026-03-31,7.3765,46.20,FILP agency bonds
+collateral,corporate_credit_group,2026-03-31,12.2738,76.87,Corporate bonds plus CP plus loans to companies
