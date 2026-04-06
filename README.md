@@ -2,470 +2,126 @@
 
 An information-churning engine for global macro, cross-asset, and cross-border flow analysis.
 
-The goal of this repository is not just to download data. It is to build a system that helps an individual investor answer:
+## Why This Repo Exists
 
-- What is the current global market regime?
-- Where is liquidity expanding or tightening?
-- Which countries, sectors, and asset classes are acting as the marginal price-setters?
-- Which flows are mechanical, which are policy-driven, and which are sentiment-driven?
-- What is the likely direction of global risk appetite across the next few days, weeks, and months?
+This project is not just a data downloader. It is a decision engine for an individual investor to answer:
 
-This repo starts from one core idea:
+- What regime are global markets in right now?
+- Is liquidity expanding or tightening?
+- Who is the marginal buyer/seller by country and asset class?
+- Which flows are mechanical vs policy-driven vs sentiment-driven?
+- What is the likely risk direction over days, weeks, and months?
 
-You cannot observe the full world flow of money directly. You can only approximate it through a layered map of:
+> Core idea: we cannot directly observe the full "world money flow."  
+> We approximate it through a layered proxy system:
+> balance sheets, rates differentials, sovereign supply, funding stress,
+> cross-border holdings, derivatives positioning, commodity flows,
+> policy communication, and narrative velocity.
 
-- balance sheets,
-- interest-rate differentials,
-- sovereign issuance and reserve behavior,
-- banking and funding stress,
-- cross-border portfolio data,
-- derivatives positioning,
-- commodities and energy flows,
-- official policy communication,
-- and real-time narrative shifts.
+## What This Engine Should Do
 
-That means the engine should be built as a proxy system, not as a fantasy "perfect ledger."
+At maturity, this repo should:
 
-## What This Repo Should Eventually Do
+1. Ingest official macro, rates, policy, and market data across major regions.
+2. Track money/risk flows across bonds, FX, equities, credit, commodities, and funding.
+3. Detect regime shifts (disinflation, reflation, QT stress, sovereign stress, risk-on/off, dollar shortage, commodity shock).
+4. Merge slow + fast + event data into interpretable market-direction scores.
+5. Output both machine features and human-readable narratives.
 
-At maturity, this project should:
+## First Principle: Balance Sheets + Marginal Buyers
 
-1. Ingest official macro, rates, policy, and market data from the most important jurisdictions.
-2. Track money and risk flows across bonds, FX, equities, credit, commodities, and funding markets.
-3. Detect regime shifts such as disinflation, reflation, QT stress, sovereign stress, risk-on, risk-off, dollar shortage, and commodity shock.
-4. Combine slow data, fast data, and event data into an interpretable market-direction score.
-5. Generate both machine-readable features and human-readable narratives.
-
-## First Principle: Model The World As Balance Sheets And Marginal Buyers
-
-Markets move when the marginal buyer or seller changes.
+Markets move when the marginal buyer/seller changes.
 
 Examples:
 
-- If the Fed is shrinking reserves while Treasury issuance is rising, funding conditions matter more.
-- If Japan repatriates capital, U.S. rates and USD/JPY can move even if U.S. data are unchanged.
-- If China is weak and commodities roll over, EM FX and cyclicals can reprice globally.
-- If oil spikes because of war, inflation expectations, bond yields, and consumer demand expectations all change together.
+- Fed reserve drain + heavy Treasury issuance raises funding importance.
+- Japan capital repatriation can move U.S. rates and USD/JPY without new U.S. data.
+- China slowdown can reprice EM FX and cyclicals through commodity demand.
+- Oil shock from war can reprice inflation expectations, rates, and consumption risk together.
 
-So this engine should be built around these actor buckets:
+### Key actor buckets
 
 - Central banks
-- Sovereign treasuries and debt offices
+- Sovereign treasuries / debt offices
 - Reserve managers
 - Commercial banks
-- Shadow banking / funding markets
-- Real-money asset managers
-- Leveraged funds / CTAs / macro funds
+- Shadow funding markets
+- Real-money managers
+- Leveraged macro / CTA participants
 - Corporates
 - Households
-- Commodity exporters and importers
-- Systemically important geopolitical actors
-
-## Factor Map: What Actually Drives Global Markets
-
-This is the heart of the repo. If a factor is not mapped here, the engine will miss the real story.
-
-### 1. Global Liquidity And Money
-
-Track:
-
-- Central bank balance sheets
-- Reserve balances
-- Policy rates
-- QE / QT pace
-- Bank reserves and excess reserves
-- Broad money and credit creation
-- Cross-currency funding conditions
-- Repo and collateral stress
-- Dollar liquidity proxies
-
-Why it matters:
-
-- Liquidity is the fuel for asset prices.
-- Tightening liquidity can hurt equities, credit, EM, and speculative assets even when growth data still look fine.
-- Expanding liquidity can support risk assets even with mediocre fundamentals.
-
-### 2. Inflation And Inflation Expectations
-
-Track:
-
-- CPI, core CPI, supercore, trimmed measures
-- PPI and input-cost pipelines
-- Wage growth
-- Breakevens
-- Inflation swaps
-- Commodity passthrough
-- Shipping and logistics costs
-- Energy and food shocks
-
-Why it matters:
-
-- Inflation changes the rate path.
-- The rate path changes discount rates.
-- Discount rates reprice nearly everything.
-
-### 3. Growth And Demand
-
-Track:
-
-- GDP nowcasts
-- PMIs / business surveys
-- Industrial production
-- Retail sales
-- Consumption proxies
-- Housing activity
-- Credit impulse
-- Payrolls / unemployment / vacancies
-- Trade volumes and export orders
-
-Why it matters:
-
-- Growth determines earnings power, default risk, fiscal stress, and political stability.
-
-### 4. Sovereign Rates And Debt Supply
-
-Track:
-
-- Front-end and long-end government bond yields
-- Curve shape
-- Term premium proxies
-- Auction calendars
-- Debt issuance
-- Fiscal deficits
-- Treasury cash balances
-- Foreign official holdings
-- Domestic bank absorption of sovereign debt
-
-Why it matters:
-
-- Sovereign bond markets are the pricing spine of the whole system.
-- They set discount rates, funding costs, and reserve-asset competition.
-
-### 5. FX And Cross-Border Capital Flows
-
-Track:
-
-- Major FX pairs
-- Real effective exchange rates
-- Reserve data
-- FX intervention
-- Balance of payments
-- International investment position
-- TIC and cross-border holdings
-- Carry spreads
-- Hedging costs and basis
-
-Why it matters:
-
-- FX is the transmission channel between domestic policy and global asset pricing.
-- Many crises are funding crises wearing an FX mask.
-
-### 6. Credit, Banking, And Funding Stress
-
-Track:
-
-- Investment-grade and HY spreads
-- CDS indices
-- Bank equity relative performance
-- Interbank funding rates
-- FRA/OIS or equivalent spread proxies
-- Repo specialness
-- Swap spreads
-- Commercial paper stress
-- Bank lending surveys
-
-Why it matters:
-
-- Credit stress often leads equity stress.
-- Funding stress can force deleveraging across otherwise unrelated assets.
-
-### 7. Equity Market Internals
-
-Track:
-
-- Index levels
-- Breadth
-- Sector rotation
-- Earnings revisions
-- Forward EPS
-- Dispersion
-- Market cap concentration
-- Small-cap vs large-cap
-- Cyclicals vs defensives
-
-Why it matters:
-
-- Index price alone can lie.
-- Breadth and leadership show whether a move is healthy or fragile.
-
-### 8. Commodities And Real-Economy Pressure
-
-Track:
-
-- Crude oil, products, gas, coal
-- Copper, iron ore, steel
-- Gold, silver
-- Agricultural commodities
-- Freight and shipping
-- Inventory levels
-- Physical bottlenecks
-
-Why it matters:
-
-- Commodities are inflation drivers, geopolitical shock sensors, and growth barometers at the same time.
-
-### 9. Positioning, Leverage, And Derivatives
-
-Track:
-
-- CFTC COT data
-- Options skew
-- Dealer gamma proxies
-- Futures open interest
-- Volatility term structure
-- CTA trend exposure proxies
-- Basis trades where observable
-
-Why it matters:
-
-- Price moves are often amplified by positioning, not fundamentals alone.
-
-### 10. Policy And Political Risk
-
-Track:
-
-- Central bank statements
-- Speeches
-- minutes
-- fiscal announcements
-- sanctions
-- tariffs
-- elections
-- war escalation
-- energy-route threats
-- industrial policy
-
-Why it matters:
-
-- Politics changes the rules of the pricing system.
-- Geopolitics can override normal macro relationships.
-
-### 11. Narrative, Sentiment, And Attention
-
-Track:
-
-- Official speeches and transcripts
-- Major economic calendars
-- trusted-news velocity
-- topic clustering
-- account-network activity
-- social-media attention spikes
-- sentiment divergence vs price
-
-Why it matters:
-
-- Markets move on both facts and the speed at which facts become common knowledge.
-
-### 12. Alternative And High-Frequency Signals
-
-Track:
-
-- mobility
-- port throughput
-- electricity demand
-- search trends
-- satellite / shipping proxies
-- card-spend proxies
-- logistics trackers
-
-Why it matters:
-
-- These are useful for nowcasting before official releases catch up.
-
-## Regional Coverage: What To Track By Geography
-
-### United States
-
-Priority:
-
-- Fed
-- Treasury
-- FRED / ALFRED
-- BLS
-- BEA
-- EIA
-- SEC EDGAR
-- CFTC
-- Treasury auction and borrowing data
-- NY Fed funding indicators
-
-Why:
-
-- The U.S. still anchors global discount rates, dollar funding, equity leadership, and reserve-asset pricing.
-
-### Euro Area
-
-Priority:
-
-- ECB
-- Eurostat
-- sovereign spreads
-- TARGET balances
-- bank stress
-- industrial demand
-- energy exposure
-
-Why:
-
-- Europe is highly sensitive to global trade, energy shocks, and banking transmission.
-
-### United Kingdom
-
-Priority:
-
-- BoE
-- gilt market
-- inflation and wage prints
-- pension / LDI stress signals
-- GBP funding and rates
-
-Why:
-
-- The U.K. is a major rates, FX, and financial-services node with outsized signaling value.
-
-### Japan
-
-Priority:
-
-- BOJ
-- MoF
-- JGBs
-- FX intervention risk
-- foreign reserve behavior
-- domestic investor allocation
-
-Why:
-
-- Japan is critical for global bond markets, yen funding, and reserve behavior.
-
-### China
-
-Priority:
-
-- PBOC
-- SAFE
-- NBS
-- credit growth
-- property stress
-- industrial demand
-- export machine
-- yuan fixing behavior
-- commodity demand
-
-Why:
-
-- China is the world's manufacturing and commodity-demand hinge.
-- China weakness or stimulus changes the whole global cycle.
-
-### India
-
-Priority:
-
-- RBI
-- government bond market
-- inflation
-- growth
-- capital flows
-- FX reserve management
-- domestic liquidity
-
-Why:
-
-- India matters more every year for EM flows, energy demand, and domestic demand growth.
-
-### Rest Of World / EM
-
-Priority:
-
-- commodity exporters
-- Taiwan / Korea semiconductor cycle
-- Gulf oil states
-- Brazil / LatAm rates and FX
-- frontier dollar stress
-
-Why:
-
-- EM often reveals liquidity cracks before DM investors notice them.
-
-## Should This Repo Capture Twitter / X Feeds?
+- Commodity exporters/importers
+- Geopolitical state actors
+
+## Factor Map (12 Buckets)
+
+If a factor is missing from this map, the engine will miss the story.
+
+| # | Factor Bucket | What To Track | Why It Matters |
+|---|---|---|---|
+| 1 | Global Liquidity & Money | Central bank balance sheets, reserves, policy rates, QE/QT pace, broad money, credit creation, cross-currency funding, repo/collateral stress | Liquidity is the fuel for asset prices |
+| 2 | Inflation & Expectations | CPI/core/supercore/trimmed, PPI pipelines, wage growth, breakevens, inflation swaps, commodity passthrough | Inflation drives rate path; rate path drives discount rates |
+| 3 | Growth & Demand | GDP nowcasts, PMIs, production, retail sales, housing, credit impulse, payrolls, trade | Growth drives earnings, defaults, fiscal pressure |
+| 4 | Sovereign Rates & Supply | Front-end/long-end yields, curve shape, term premium, auctions, issuance, deficits, cash balances, foreign holdings | Sovereign markets are the global pricing spine |
+| 5 | FX & Cross-Border Flows | Major FX, REER, reserves, intervention, BoP, IIP, TIC, carry, hedging basis | FX is the transmission channel for global pricing |
+| 6 | Credit, Banking & Funding Stress | IG/HY spreads, CDS, bank equity, interbank rates, FRA/OIS proxies, repo specialness, swap spreads | Funding stress forces cross-asset deleveraging |
+| 7 | Equity Internals | Breadth, sector rotation, earnings revisions, dispersion, concentration, small-vs-large, cyclical-vs-defensive | Index level alone can hide fragility |
+| 8 | Commodities & Real-Economy Pressure | Oil/products/gas/coal, base metals, gold/silver, agriculture, freight, inventories | Commodities are inflation + growth + geopolitics in one channel |
+| 9 | Positioning, Leverage & Derivatives | CFTC COT, skew, dealer gamma proxies, open interest, vol term structure, CTA proxies | Positioning amplifies price moves |
+| 10 | Policy & Political Risk | CB statements/speeches/minutes, fiscal actions, sanctions, tariffs, elections, war, route threats | Policy can override normal macro relationships |
+| 11 | Narrative, Sentiment & Attention | Official transcripts, calendar density, trusted-news velocity, topic clustering, account-network shifts, social attention spikes | Speed of consensus formation moves markets |
+| 12 | Alternative/High-Frequency Signals | Mobility, ports, electricity demand, search trends, shipping/satellite proxies, card-spend | Useful for nowcasting before official data catch up |
+
+## Regional Coverage (Priority Lens)
+
+| Region | Priority Inputs | Why It Is Systemic |
+|---|---|---|
+| United States | Fed, Treasury, FRED/ALFRED, BLS, BEA, EIA, SEC, CFTC, auction/borrowing data, NY Fed funding indicators | Anchor of global discount rates, dollar funding, and reserve pricing |
+| Euro Area | ECB, Eurostat, sovereign spreads, TARGET balances, bank stress, industrial and energy sensitivity | High exposure to trade/energy/banking transmission |
+| United Kingdom | BoE, gilt market, inflation/wage prints, pension/LDI stress, GBP funding | Financial-system signaling node with outsized global impact |
+| Japan | BOJ, MoF, JGB market, FX intervention risk, reserve behavior, domestic allocation | Key for global rates, yen funding, reserve dynamics |
+| China | PBOC, SAFE, NBS, credit/property cycle, industrial demand, exports, yuan fixing, commodity demand | Manufacturing and commodity-demand hinge of global cycle |
+| India | RBI, gov bond market, inflation/growth, capital flows, FX reserves, liquidity | Fast-growing EM flow and demand center |
+| Rest of World / EM | Commodity exporters, Taiwan/Korea semi cycle, Gulf oil states, Brazil/LatAm rates+FX, frontier dollar stress | Early warning channel for global liquidity cracks |
+
+## Should We Capture Twitter / X?
 
 Yes, but only as a secondary layer.
 
-X is useful for:
+### Use X for
 
-- real-time headlines,
-- policy leaks,
-- local-language reaction,
-- official account monitoring,
-- journalist and regulator watchlists,
-- and measuring narrative velocity.
+- Real-time headlines and narrative acceleration
+- Official-account monitoring
+- Journalist/regulator watchlists
+- Local-language reaction context
 
-X is bad as a primary truth source because:
+### Do not use X as primary truth
 
-- it is noisy,
-- access is gated by pricing tiers,
-- relevance is unstable,
-- engagement is easy to manipulate,
-- and macro-quality signal is sparse compared with official releases.
+- High noise and manipulation risk
+- Tier-gated access
+- Relevance instability
+- Lower signal quality than official releases
 
-Recommended rule:
+### Rule of precedence
 
-- official data and official policy communication should set the base view,
-- trusted news should confirm event reality,
-- X should help detect narrative acceleration and market attention,
-- but X should not override official data on its own.
+1. Official data + policy communication set baseline view.
+2. Trusted news confirms event reality.
+3. X enriches attention/speed signals.
+4. X never overrides official data by itself.
 
-Capture approach for X:
+### Capture pipeline for X
 
-1. Build watchlists:
-   - central banks
-   - finance ministries
-   - debt offices
-   - regulators
-   - exchange accounts
-   - trusted journalists
-   - policy analysts
-2. Use the official X API for:
-   - recent search,
-   - full-archive search where available,
-   - and filtered stream if your tier supports it.
-3. Store:
-   - post id,
-   - author id,
-   - timestamp,
-   - language,
-   - entities,
-   - referenced posts,
-   - public metrics,
-   - topic tags,
-   - embeddings / classifier outputs
-4. Compute:
-   - attention velocity,
-   - topic frequency,
-   - sentiment,
-   - stance,
-   - conflict,
-   - surprise,
-   - narrative divergence vs price
-5. Keep ToS in mind:
-   - design storage and redistribution carefully,
-   - and prefer storing ids, metadata, features, and summaries over uncontrolled redistribution of full raw content.
+1. Build watchlists (CBs, ministries, debt offices, regulators, exchanges, journalists, analysts).
+2. Use official X API (recent search, full archive where available, filtered stream by tier).
+3. Store metadata/features (id, author, timestamp, language, entities, references, metrics, topics, embeddings/classifier outputs).
+4. Compute downstream features (attention velocity, topic frequency, sentiment/stance/conflict/surprise, narrative-price divergence).
+5. Respect ToS (prefer ids/metadata/features/summaries over uncontrolled raw redistribution).
 
-## Official And High-Signal Data Sources
+## Source Strategy: Official First
 
-Use official and stable sources first. Add vendor or social data later.
+Use official and stable sources first; layer social/vendor feeds later.
 
-### Core Official APIs And Feeds
+### Core official APIs and feeds
 
 - [FRED / ALFRED API](https://fred.stlouisfed.org/docs/api/fred/overview.html)
 - [FRED observations endpoint](https://fred.stlouisfed.org/docs/api/fred/series_observations.html)
@@ -485,155 +141,46 @@ Use official and stable sources first. Add vendor or social data later.
 - [X filtered stream overview](https://developer.x.com/en/docs/twitter-api/filtered-stream-overview)
 - [GDELT DOC 2.0 API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/amp/)
 
-### Additional Data You Will Likely Need Later
+### Additional data likely needed later
 
-- Exchange calendars and market holiday calendars
+- Exchange and holiday calendars
 - Earnings calendars and guidance databases
 - Sovereign auction calendars
 - Intraday market prices
 - Options chains
 - FX forwards / basis
-- Cross-country ETF and fund-flow data
-- Country-specific official sources that may require scraping instead of APIs
+- Cross-country ETF/fund-flow datasets
+- Country-specific official pages requiring structured scraping
 
 Inference:
 
-Some country coverage, especially for China and parts of India / EM, may require a hybrid model:
+Coverage for China and parts of India/EM likely needs a hybrid model:
+official APIs + structured scraping + bulk files + revision-aware QA.
 
-- official APIs where available,
-- structured scraping for official release pages,
-- bulk spreadsheets,
-- and manual QA around revisions and publication lags.
+## Modeling World Money Flow (Practical Lens)
 
-## Modeling World Flow Of Money: The Right Way To Think About It
+Do not model "money" as one scalar. Model interacting channels:
 
-Do not think of "money" as one number moving from one place to another.
+| Channel | Core Components |
+|---|---|
+| A. Policy Liquidity | Central bank assets, reserves, QE/QT, standing facilities, policy path |
+| B. Sovereign Supply | Net issuance, duration supply, auction absorption, foreign demand, bank capacity |
+| C. Cross-Border Capital | Reserve accumulation, pension/insurer flow, household foreign buying, FDI, portfolio rebalancing, repatriation |
+| D. Banking & Funding | Repo, swaps, lending, collateral scarcity, dollar funding, maturity transformation |
+| E. Commodity & Trade Settlement | Terms of trade, energy import bill, shipping disruption, reserve drawdown |
+| F. Risk Appetite | Equity/credit demand, vol-selling/buying, leverage, CTA trend mechanics, defensive reallocation |
 
-Model it as interacting balance-sheet channels:
-
-### Channel A. Policy Liquidity
-
-- central bank assets,
-- reserves,
-- QT / QE,
-- standing facilities,
-- policy-rate path
-
-### Channel B. Sovereign Supply
-
-- net issuance,
-- duration supply,
-- auction absorption,
-- foreign demand,
-- bank balance-sheet capacity
-
-### Channel C. Cross-Border Capital
-
-- reserve accumulation,
-- pension and insurer flows,
-- household foreign buying,
-- direct investment,
-- portfolio rebalancing,
-- repatriation stress
-
-### Channel D. Banking And Funding
-
-- repo,
-- swaps,
-- bank lending,
-- collateral scarcity,
-- dollar funding,
-- maturity transformation
-
-### Channel E. Commodity And Trade Settlement
-
-- importer / exporter balances,
-- terms of trade,
-- energy bills,
-- shipping disruptions,
-- reserve drawdowns
-
-### Channel F. Risk Appetite
-
-- equity and credit demand,
-- volatility selling or buying,
-- leverage,
-- CTA trend mechanics,
-- defensive reallocation
-
-The engine should estimate each channel separately, then combine them into a regime state.
+The engine should estimate each channel independently, then combine them into regime states.
 
 ## Project Architecture
 
-This repo should follow a layered architecture.
-
-### Layer 1. Bronze / Raw Ingestion
-
-Store raw files exactly as collected:
-
-- API responses
-- CSVs
-- XLSX files
-- PDFs
-- HTML
-- RSS payloads
-- social metadata
-
-Why:
-
-- reproducibility,
-- auditability,
-- and revision-aware research.
-
-### Layer 2. Silver / Normalized Data
-
-Normalize into consistent tables:
-
-- releases
-- time series
-- event tables
-- instrument metadata
-- market prices
-- policy documents
-- speaker entities
-- social posts
-
-### Layer 3. Gold / Feature Store
-
-Create reusable features:
-
-- surprise scores
-- z-scores
-- rolling momentum
-- rate-differential changes
-- curve steepening / flattening
-- liquidity impulse
-- inflation impulse
-- credit stress score
-- policy hawkish / dovish score
-- geopolitical escalation score
-- narrative velocity score
-
-### Layer 4. Model Layer
-
-Run:
-
-- regime classification
-- market direction scoring
-- cross-asset linkage analysis
-- anomaly detection
-- clustering
-- factor decomposition
-
-### Layer 5. Narrative Layer
-
-Generate:
-
-- morning brief
-- weekly macro map
-- risk dashboard
-- country snapshots
-- event-driven market notes
+| Layer | Purpose | Typical Outputs |
+|---|---|---|
+| Bronze (Raw) | Preserve source truth exactly as collected | API payloads, CSV/XLSX, PDF, HTML, RSS, social metadata |
+| Silver (Normalized) | Standardize into consistent schemas | Releases, time series, event tables, instrument metadata, documents |
+| Gold (Feature Store) | Create reusable analytical signals | Surprise/z-score/momentum, curve signals, liquidity and risk composites |
+| Model Layer | Convert features to states/probabilities | Regime labels, direction scores, linkage and anomaly outputs |
+| Narrative Layer | Explain machine output for humans | Morning brief, weekly macro map, risk dashboard, country notes |
 
 ## Repo Layout
 
@@ -662,11 +209,9 @@ Generate:
 └── boj_* existing research artifacts
 ```
 
-## What The Engine Should Score
+## Engine Score Outputs
 
-The score should not be "bullish" or "bearish" in one vague number.
-
-It should emit:
+### Core regime scores
 
 - `global_liquidity_score`
 - `inflation_pressure_score`
@@ -679,110 +224,59 @@ It should emit:
 - `narrative_heat_score`
 - `overall_risk_regime`
 
-And then separate directional outputs by horizon:
+### Directional outputs by horizon
 
-- `risk_assets_1w`
-- `risk_assets_1m`
-- `duration_1w`
-- `duration_1m`
-- `usd_1w`
-- `usd_1m`
+- `risk_assets_1w`, `risk_assets_1m`
+- `duration_1w`, `duration_1m`
+- `usd_1w`, `usd_1m`
 - `oil_1w`
 - `gold_1w`
 
 ## Suggested Build Order
 
-### Phase 1. Build The Spine
-
-Start with:
-
-- U.S.
-- Euro area
-- Japan
-- China
-- India
-
-and only the highest-signal factors:
-
-- rates
-- central banks
-- sovereign supply
-- FX
-- inflation
-- growth
-- commodities
-- official policy communication
-
-### Phase 2. Add Positioning And Credit
-
-Add:
-
-- COT
-- options vol
-- credit spreads
-- bank stress
-- ETF and fund-flow proxies
-
-### Phase 3. Add Narrative Intelligence
-
-Add:
-
-- RSS monitoring
-- document parsing
-- event extraction
-- X watchlists
-- trusted-news clustering
-
-### Phase 4. Add Modeling
-
-Add:
-
-- regime labeling
-- market-direction composites
-- explainable scoring
-- backtesting
+| Phase | Focus | Deliverable |
+|---|---|---|
+| 1 | Build the spine (U.S., Euro area, Japan, China, India + top factors) | Stable ingestion + normalized baseline datasets |
+| 2 | Add positioning and credit | Better stress/risk timing sensitivity |
+| 3 | Add narrative intelligence | Event/narrative acceleration layer |
+| 4 | Add modeling | Regime labeling, direction composites, explainable backtests |
 
 ## What Not To Do
 
 - Do not start by scraping everything.
-- Do not mix raw data and modeled data in the same tables.
-- Do not rely on social sentiment as the main signal.
+- Do not mix raw and modeled data in the same tables.
+- Do not treat social sentiment as primary signal.
 - Do not ignore revisions and release-time alignment.
-- Do not build one giant "market score" with no decomposition.
-- Do not treat all countries as equally important all the time.
+- Do not collapse everything into one opaque score.
+- Do not treat all countries as equally important at all times.
 
 ## Existing Repo Artifacts
 
-This repo already contains BOJ-specific research files and a dashboard:
+These BOJ artifacts are the first end-to-end example:
 
 - `boj_march30_to_apr03_analysis.md`
 - `boj_advanced_dashboard.html`
 - `boj_visual_dataset.csv`
 - `boj_downloads/`
 
-Those can serve as the first example of:
-
-- raw-file capture,
-- document interpretation,
-- policy narrative extraction,
-- and dashboard output.
+They already demonstrate raw capture, policy interpretation, and dashboard output.
 
 ## Immediate Next Steps
 
-1. Define the source registry and event calendars.
-2. Implement connectors for the official sources listed in `configs/source_registry.example.yaml`.
-3. Normalize data into standard schemas.
-4. Create the first version of the factor feature store.
-5. Build a simple regime dashboard before any fancy ML.
+1. Finalize source registry and event calendars.
+2. Implement connectors from `configs/source_registry.example.yaml`.
+3. Normalize into standard schemas.
+4. Build first feature-store version.
+5. Launch a simple regime dashboard before advanced ML.
 
 ## Long-Term Vision
 
-The best version of this repo becomes:
+The mature system becomes:
 
-- a macro data lake,
-- a flow map,
-- a policy watcher,
-- a cross-asset risk engine,
-- and a personal market research assistant.
+- A macro data lake
+- A world flow map
+- A policy watcher
+- A cross-asset risk engine
+- A personal market research copilot
 
-That is ambitious, but it is the right ambition.
+Ambitious, but exactly the right direction.
